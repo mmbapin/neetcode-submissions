@@ -1,0 +1,28 @@
+class Solution {
+    /**
+     * @param {string} s
+     * @return {string}
+     */
+    longestPalindrome(s) {
+        if(s.length < 1) return s;
+        let start = 0;
+        let maxLength = 1;
+
+        const extendFromCenter = (left, right) => {
+            while(left >= 0 && right < s.length && s[left] === s[right]){
+                if(right - left + 1 > maxLength){
+                    start = left;
+                    maxLength = right - left + 1;
+                }
+                left--;
+                right++
+            }
+        }
+
+        for(let i = 0; i < s.length; i++){
+            extendFromCenter(i, i);
+            extendFromCenter(i, i + 1);
+        }
+        return s.substring(start, start + maxLength);
+    }
+}
